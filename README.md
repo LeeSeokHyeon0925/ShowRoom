@@ -1,10 +1,12 @@
 ## ShowRoom: Indoor Scene 3D Reconstruction System
 Based on n user-selected images of a room, this system generates realistic 3D spaces by filling in missing 2D visual information (inpainting) and compensating for empty regions generated during the 3D reconstruction process.
 
-## ShowRoom FlowChart
 <p align="center">
   <img src="https://github.com/user-attachments/assets/e9c5838e-8dd7-4d3e-b350-c71fc070955f" width="600"/>
 </p>
+
+## Flowchart
+![image](https://github.com/user-attachments/assets/81453487-72b1-4635-b23e-1e375079e726)
 
 
 
@@ -33,15 +35,15 @@ Demo dataset : demo/data
   ### Run to 2D Generation (ST-RoomNet (discriminator) → Stable-Diffusion (generator))
   Download the weight file from the following link: https://drive.google.com/file/d/1j2eQdEMWsHPpULlGBkZxVO6QFeOM0E1E/view?usp=sharing
   
-  Put the weight file into the __generate2d/discriminator/weight__
+  Put the weight file into the __generate2d/discriminator/weight__.
   
-  ※If running on Colab, you must enable GPU.
+  ※ If running on Colab, you must enable GPU.
   
     python demo/generator_2d_demo.py
 
 If you want to run the demo with your own image, put your image and pose in the demo/data directory.
 
-The generated images are saved in the output_gen folder.
+The generated images are saved in the _output_gen_ folder.
 
   ## Run to Review
     python demo/review_demo.py —url [Airbnb URL]   # Enter the URL of the Airbnb listing as a string to extract the review topics.
@@ -52,7 +54,6 @@ The generated images are saved in the output_gen folder.
       
 ## Project Structure
     ShowRoom/
-    ├── .idea/                         # PyCharm project settings
     ├── EDA/                           # Exploratory Data Analysis scripts
     ├── chrome_extension/              # Chrome extension implementation code
     ├── configs/                       # KD model training and environment configuration files
@@ -66,7 +67,7 @@ The generated images are saved in the output_gen folder.
     │   └── generator/                 # Generator of 2D image
     ├── kd_fast3r/                     # Knowledge Distillation training modules for Fast3R
     │   └── utils/
-    ├── review/                        # Visualization and review of model evaluation results
+    ├── review/                        # Topic Extraction and review of model evaluation results
     ├── server/                        # Flask-based backend server
     │   ├── templates/
     │   ├── results/
@@ -101,10 +102,10 @@ Each scene was represented as a list of dictionaries, one per view:
 
 Each view_i contained the folling keys:
 
-    image   : Tensor [B, 3, 192, 256]   # noramlized RGB image 
-    true_shape : Tensor [B, 2]   # original image dimensions
-    index   : list [B]   # image indices 
-    instance  : list [B]   # scene instance IDs 
+    image   : Tensor [B, 3, 192, 256]     # noramlized RGB image 
+    true_shape : Tensor [B, 2]            # original image dimensions
+    index   : list [B]                    # image indices 
+    instance  : list [B]                  # scene instance IDs 
 
 B refers to the number of scenes in a batch. All views shared the same batch size B, and there were a total of S views per scene (e.g. 5 images)
 
